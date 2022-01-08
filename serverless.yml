@@ -1,0 +1,62 @@
+service: aws-node-project-abhijit
+
+frameworkVersion: '2 || 3'
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+functions:
+  getStudents:
+    handler: students.getStudents
+    events: 
+      - http:
+          path: students
+          cors: true
+          method: get 
+
+  getStudentById:
+    handler: students.getStudentById
+    events: 
+      - http:
+          path: students/{student_id}
+          cors: true
+          method: get 
+          request: 
+            parameters:
+              paths:
+                student_id: true
+
+  createStudents:
+    handler:  students.createStudents
+    events:
+      - http:
+          path: students
+          cors: true
+          method: post
+    
+  updateStudents:
+    handler:  students.updateStudentById
+    events:
+      -  http:
+          path: students/{student_id}
+          cors: true
+          method: put
+          request:
+            parameters:
+              paths:
+                student_id: true
+
+  deleteStudents:
+    handler:  students.deleteStudentById
+    events:
+      - http:
+          path: students/{student_id}
+          cors: true
+          method: delete
+          request:
+            parameters:
+              paths:
+                student_id: true
